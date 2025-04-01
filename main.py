@@ -4,6 +4,7 @@ from flask import Flask, send_from_directory
 from openai import OpenAI
 from flask import request
 from flask_cors import CORS
+from waitress import serve
 
 config = dotenv_values(".env")
 client = OpenAI(
@@ -45,4 +46,4 @@ def ask():
         }
     ]
 
-app.run(port=3031)
+serve(app, host="0.0.0.0", port=3031, threads=6)
