@@ -5,10 +5,7 @@ from openai import OpenAI
 from flask import request
 from flask_cors import CORS
 from waitress import serve
-from Languages import Languages
 from Quote import Quote
-
-
 
 app = Flask(__name__)
 CORS(app, origins=["https://www.w3schools.com"], supports_credentials=True)
@@ -37,19 +34,13 @@ def ask():
         if not key:
             return {"status": "error", "content": "Missing parameter: key"}, 400
 
-        try:
-            language = Languages().getLanguageById(int(data.get("dolphin")))
-            if not language:
-                return {"status": "error", "message": "Invalid language parameter: dolphin"}, 400
-        except Exception as e:
-            return {"status": "error", "message": str(e)}, 400
         response = client.chat.completions.create(
             model = "gpt-4o",
             messages = [
                 {"role": "assistant", "content": config.get("GPT_PROMPT")},
                 {"role": "assistant", "content": "Do NOT return the code in markdown format, and you MUST NOT use backticks before, or after the code."},
                 {"role": "assistant", "content": "If you receive a short code snippet, you should ASSUME that you will need to fix it."},
-                {"role": "user", "content": f"Write a {language} code that does the following: {question}"},
+                {"role": "user", "content": f"Write a code that does the following: {question}"},
             ]
         )
         return [
