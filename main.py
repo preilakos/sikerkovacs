@@ -24,7 +24,7 @@ def ask():
     data = request.get_json()
     question = data.get("question")
     key = data.get("key")
-    language = Languages.get_language_enum(data.get("dolphin"))
+    language = Languages.getLanguageById(data.get("dolphin"))
     if key != config.get("KEY"):
         return [
             {
