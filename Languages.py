@@ -4,6 +4,7 @@ class Languages:
     JAVA = 3
     PYTHON = 4
     HTML = 5
+    JAVAFX_WITH_FXML = 6
 
     def getLanguageById(self, id):
         if id == self.VUE3_COMPOSITION:
@@ -16,5 +17,7 @@ class Languages:
             return "Python"
         elif id == self.HTML:
             return "HTML"
+        elif id == self.JAVAFX_WITH_FXML:
+            return "JavaFX with FXML"
         else:
             return "HTML"
