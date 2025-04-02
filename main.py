@@ -22,17 +22,23 @@ def index():
 @app.route("/get", methods=["POST"])
 def ask():
     data = request.get_json()
+    if not data:
+        return {"status": "error", "content": "Invalid JSON body"}, 400
+
     question = data.get("question")
+    if not question:
+        return {"status": "error", "content": "Missing parameter: question"}, 400
+
     key = data.get("key")
-    languages = Languages()
-    language = Languages.getLanguageById(languages, data.get("dolphin"))
-    if key != config.get("KEY"):
-        return [
-            {
-                "status": "error",
-                "content": "Invalid key"
-            }
-        ]
+    if not key:
+        return {"status": "error", "content": "Missing parameter: key"}, 400
+
+    try:
+        language = Languages().getLanguageById(data.get("dolphin"))
+        if not language:
+            return {"status": "error", "message": "Invalid language parameter: dolphin"}, 400
+    except Exception as e:
+        return {"status": "error", "message": str(e)}, 400
     response = client.chat.completions.create(
         model = "gpt-4o",
         messages = [
