@@ -5,6 +5,7 @@ from openai import OpenAI
 from flask import request
 from flask_cors import CORS
 from waitress import serve
+from Languages import Languages
 
 config = dotenv_values(".env")
 client = OpenAI(
@@ -23,7 +24,7 @@ def ask():
     data = request.get_json()
     question = data.get("question")
     key = data.get("key")
-    language = data.get("language") or "vue 3"
+    language = Languages.get_language_enum(data.get("dolphin"))
     if key != config.get("KEY"):
         return [
             {
