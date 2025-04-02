@@ -1,4 +1,4 @@
-class LanguageEnum:
+class Languages:
     VUE3_COMPOSITION = 1
     JAVASCRIPT = 2
     JAVA = 3
