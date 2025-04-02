@@ -34,7 +34,7 @@ def ask():
         return {"status": "error", "content": "Missing parameter: key"}, 400
 
     try:
-        language = Languages().getLanguageById(data.get("dolphin"))
+        language = Languages().getLanguageById(int(data.get("dolphin")))
         if not language:
             return {"status": "error", "message": "Invalid language parameter: dolphin"}, 400
     except Exception as e:
